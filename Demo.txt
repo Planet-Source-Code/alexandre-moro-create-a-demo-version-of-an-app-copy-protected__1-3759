@@ -1,0 +1,51 @@
+*** Creating a demo version of a program with copy protection ***
+
+
+Here are some techniques that I use in the project Demo.vbp, this techniques are often used 
+in most systems who features Demo versions.
+
+The general ideas behind all demo versions of commercial softwares that are sell all around
+the world are almost the same:
+Save some entries to the windows registry, describing basically the date of installation of the
+demo version. This entry is always saved encrypted, or any other way that you cannot alter by
+editing the registry.
+
+The project here shows security scheme that is based upon three factors:
+
+1 - Serial number of the HD
+2 - Date of installation
+3 - Number of times that the application has run.
+
+ 
+Based on that, you can lock your application if the user has passed X days after the installation
+or Y times the system has run.
+All the entries are saved encrypted.
+
+The serial number of the HD gives you the ability to let the user pass you his code, you apply
+it to some mathematical expression and give back the user a registration code.
+Every time the application starts, it checks for the HD's serial number and the registration code.
+If they don't match (based on the math expression you used), there is some error and the 
+application locks (or if you want, convert it back to the demo version).
+
+If you want to delete the settings, go to
+HKEY_CURRENT_USER\Software\VB and VBA Program Settings\DemoApp\Install
+and delete the key.
+
+NOTES: 
+1 - You can design your software to be a Demo version by disabling some features, just by
+assigning a public variable "Demo" as boolean.
+2 - Here I save the settings using the standard "SaveSetting" and "GetSetting" functions from VB.
+However, you can use an API function to place it anywhere else in the registry.
+Alternatively to increase the security, you can put each of the settings in different
+sections, to prevent the user from deleting the settings (wich would reinitialize the counter of
+the demo version).
+
+The encryption and decryption functions I picked up from Planet Source Code, but can't remember
+from who it is. Sorry, and thanks!  :)
+
+
+Hope this helps somebody.
+
+Alexandre Moro
+alb@cwb.matrix.com.br
+
